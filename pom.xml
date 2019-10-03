@@ -8,11 +8,11 @@
 		<version>2.1.7.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.plantplaces</groupId>
-	<artifactId>plantplaces</artifactId>
+	<groupId>com.taskspace</groupId>
+	<artifactId>taskspace</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>plantplaces</name>
-	<description>Demo project for Spring Boot</description>
+	<name>taskspace</name>
+	<description>Task organizing site</description>
 
 	<properties>
 		<java.version>1.8</java.version>
