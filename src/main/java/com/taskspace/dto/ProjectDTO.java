@@ -5,6 +5,8 @@ public class ProjectDTO
 	private int projectId;
 	private String projectName;
 	private int projectOwnerId;
+	private int linkId;
+	private boolean isShareable;
 	
 	public int getProjectId() 
 	{
@@ -34,5 +36,17 @@ public class ProjectDTO
 	public void setProjectOwnerId(int projectOwnerId) 
 	{
 		this.projectOwnerId = projectOwnerId;
+	}
+	public int getLinkId() {
+		return linkId;
+	}
+	public void setLinkId(int linkId) {
+		this.linkId = linkId;
+	}
+	public boolean getIsShareable() {
+		return isShareable;
+	}
+	public void setIsShareable(boolean isShareable) {
+		this.isShareable = isShareable;
 	}
 }

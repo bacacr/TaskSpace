@@ -9,6 +9,8 @@ public class TaskDTO
 	private String taskColor;
 	private boolean isUpdated;
 	private boolean isTaskShareable;
+	private int projectId;
+	private String assignedTo;
 	
 	public int[] getTaskList() 
 	{
@@ -78,5 +80,17 @@ public class TaskDTO
 	public void setTaskShareable(boolean isTaskShareable) 
 	{
 		this.isTaskShareable = isTaskShareable;
+	}
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	public String getAssignedTo() {
+		return assignedTo;
+	}
+	public void setAssignedTo(String assignedTo) {
+		this.assignedTo = assignedTo;
 	}
 }

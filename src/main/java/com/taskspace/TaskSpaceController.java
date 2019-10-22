@@ -2,8 +2,11 @@ package com.taskspace;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.taskspace.dto.TaskDTO;
 
 /**
  * @author Administrator
@@ -19,16 +22,18 @@ public class TaskSpaceController {
 		return "start";
 	}
 	
-	@RequestMapping(value = "/start", method = RequestMethod.GET, params = {"loyalty=blue"})
-	public String readBlue() {
-		
-		return "start";
+	@RequestMapping(value = "/taskList/:projectId", method = RequestMethod.GET)
+	public int[] getTaskList() {
+		int[] taskList = {3, 4, 5};
+		return taskList;
 	}
 	
-	@RequestMapping(value = "/start", method = RequestMethod.GET, params = {"loyalty=silver"})
-	public String readSilver() {
-		
-		return "start";
+	@RequestMapping(value = "/addTask", method = RequestMethod.POST, consumes= "text/json")
+	public TaskDTO addToTaskList(@RequestBody String newTask) {
+		//Insert method to add task to project
+		//Below is a placeholder for return of above method
+		TaskDTO createdTask = new TaskDTO();
+		return createdTask;
 	}
 	
 	@RequestMapping(value = "/start", method = RequestMethod.GET, headers = {"content-type=text/json"})
