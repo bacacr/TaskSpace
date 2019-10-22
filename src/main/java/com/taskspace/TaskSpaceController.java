@@ -1,6 +1,7 @@
 package com.taskspace;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,9 +23,9 @@ public class TaskSpaceController {
 		return "start";
 	}
 	
-	@RequestMapping(value = "/taskList/:projectId", method = RequestMethod.GET)
-	public int[] getTaskList() {
-		int[] taskList = {3, 4, 5};
+	@RequestMapping(value = "/taskList", method = RequestMethod.GET, params="")
+	public TaskDTO[] getTaskList() {
+		TaskDTO[] taskList = {};
 		return taskList;
 	}
 	
@@ -42,10 +43,10 @@ public class TaskSpaceController {
 		return "start";
 	}
 	
-	@PostMapping("/start")
+	@GetMapping("/home")
 	public String create() {
 		
-		return "start";
+		return "home";
 	}
 	
 	/**
