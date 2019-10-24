@@ -23,12 +23,22 @@ public class TaskSpaceController {
 		return "start";
 	}
 	
+	/**
+	 * Maps to the /taskList endpoint
+	 * Returns taskList from TaskDTO
+	 * @return
+	 */
 	@RequestMapping(value = "/taskList", method = RequestMethod.GET, params="")
 	public TaskDTO[] getTaskList() {
 		TaskDTO[] taskList = {};
 		return taskList;
 	}
 	
+	/**
+	 * Maps POST requests to the /addTask endpoint
+	 * @param newTask
+	 * @return
+	 */
 	@RequestMapping(value = "/addTask", method = RequestMethod.POST, consumes= "text/json")
 	public TaskDTO addToTaskList(@RequestBody String newTask) {
 		//Insert method to add task to project
@@ -43,6 +53,11 @@ public class TaskSpaceController {
 		return "start";
 	}
 	
+	/**
+	 * Maps to the /home endpoint
+	 * and displays the TaskSpace homepage
+	 * @return
+	 */
 	@GetMapping("/home")
 	public String create() {
 		

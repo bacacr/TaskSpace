@@ -8,6 +8,11 @@ public class ProjectDTO
 	private int linkId;
 	private boolean isShareable;
 	
+	/**
+	 * Getters and setters for each project
+	 * the user creates
+	 * @return
+	 */
 	public int getProjectId() 
 	{
 		return projectId;

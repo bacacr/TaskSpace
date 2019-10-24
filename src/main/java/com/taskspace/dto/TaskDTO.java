@@ -12,6 +12,11 @@ public class TaskDTO
 	private int projectId;
 	private String assignedTo;
 	
+	/**
+	 * Getters and setters for each task
+	 * the user creates
+	 * @return
+	 */
 	public int[] getTaskList() 
 	{
 		return taskList;
