@@ -1,5 +1,7 @@
 package com.taskspace.dao;
 
+import java.net.URL;
+
 public class ShareableLinkDAO {
 	
 	/**
@@ -7,8 +9,8 @@ public class ShareableLinkDAO {
 	 * Setting baseURL & relativeURL
 	 */
 
-	URL baseURL = new URL("http://www.TaskSpace.com/");
+	//URL baseURL = new URL("http://www.TaskSpace.com/");
 	
-	URL relativeURL = new URL(baseURL, projectName);
+	//URL relativeURL = new URL(baseURL, projectName);
 
 }
