@@ -20,8 +20,7 @@ public class TaskSpaceController {
 
 	@Autowired
 	private ITaskService taskService;
-
-
+	
 	/**
 	 * Maps to the /home endpoint
 	 * and displays the TaskSpace homepage
