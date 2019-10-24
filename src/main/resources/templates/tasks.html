@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>TaskSpace.com</title>
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  height: 50px;
+}
+td {
+  text-align: left;
+  height: 25px;
+}
+</style>
+</head>
+<body>
+	<h1>TaskSpace</h1>
+    <nav>
+		<button onclick= "location.href='/home'">Home</button>
+		<button onclick= "location.href='/tasks'">View Tasks</button>
+	</nav> 
+	<br>
+	<table>
+		<tr>
+			<th>TaskID</th>
+			<th>Priority Level</th>
+			<th>Assigned To</th>
+			<th>Task Color</th>
+		</tr>	
+    	<tr>
+        	<td th:text="${taskDTO.taskId}"></td>
+        	<td th:text="${taskDTO.taskPriorityLevel}"></td>
+        	<td th:text="${taskDTO.assignedTo}"></td>
+        	<td th:style="'background-color: ' + ${taskDTO.taskColor} + '; color: white'" th:text="${taskDTO.taskColor}"></td>
+    	</tr>
+    </table>
+    <br>
+    <table>
+		<tr>
+			<th>TaskID</th>
+			<th>Priority Level</th>
+			<th>Assigned To</th>
+			<th>Task Color</th>
+		</tr>	
+    	<tr th:each="task: ${taskList}">
+        	<td th:text="${task.taskId}"></td>
+        	<td th:text="${task.taskPriorityLevel}"></td>
+        	<td th:text="${task.assignedTo}"></td>
+        	<td th:style="'background-color: ' + ${task.taskColor} + '; color: white'" th:text="${task.taskColor}"></td>
+    	</tr>
+    </table>
+</body>
+</html>
