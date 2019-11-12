@@ -21,16 +21,6 @@ public class TaskSpaceController {
 	@Autowired
 	private ITaskService taskService;
 	
-	/**
-	 * Maps to the /home endpoint
-	 * and displays the TaskSpace homepage
-	 * @return
-	 */
-	@GetMapping("/home")
-	public String create() {
-		
-		return "home";
-	}
 	@GetMapping("/tasks")
 	public String createTasks(Model model) {
 		TaskDTO taskDTO = taskService.fetchByTaskId(10);
@@ -38,15 +28,5 @@ public class TaskSpaceController {
 		model.addAttribute("taskDTO", taskDTO);
 		model.addAttribute("taskList", taskList);
 		return "tasks";
-	}
-	
-	/**
-	 * @author Administrator
-	 * Handles the "/" endpoint
-	 */
-	@RequestMapping("/")
-	public String index() {
-			
-		return "home";
 	}
 }
