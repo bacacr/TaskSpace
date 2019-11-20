@@ -45,10 +45,11 @@ public class TaskSpaceController {
 	}
 	@GetMapping("/grid")
 	public String createGrid(Model model) {
-		TaskDTO taskDTO = taskService.fetchByTaskId(10);
-		List<TaskDTO> taskList = taskService.fetchAllTasks(20);
-		model.addAttribute("taskDTO", taskDTO);
-		model.addAttribute("taskList", taskList);
+		List<TaskDTO> taskList = taskService.fetchTasksForGrid(20);
+		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
+		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
+		model.addAttribute("taskWorking", taskWorking);
+		model.addAttribute("taskOpen", taskOpen);
 		return "grid";
 	}
 }

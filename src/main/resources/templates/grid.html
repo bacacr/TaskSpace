@@ -2,50 +2,110 @@
 <html xmlns:th="http://wwww.thymeleaf.org">
 <head>
 <meta charset="ISO-8859-1">
-<!--Implements libraries from https://shopify.github.io/draggable-->
-<!-- Draggable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/draggable.js"></script>
-<!-- Sortable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/sortable.js"></script>
-<!-- Droppable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/droppable.js"></script>
-<!-- Swappable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/swappable.js"></script>
 <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
 <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
 <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
 <title>TaskSpace.com</title>
 <style>
-.grid {
+/*
+	Styling from Muuri
+*/
+.board {
   position: relative;
+  margin-left: 1%;
 }
-.item {
-  display: block;
+.board-column {
   position: absolute;
-  width: 100px;
-  height: 100px;
-  margin: 5px;
+  left: 0;
+  right: 0;
+  width: 30%;
+  margin: 0 1.5%;
+  background: #f0f0f0;
+  border-radius: 3px;
   z-index: 1;
-  color: #fff;
 }
-.item.muuri-item-dragging {
-  z-index: 3;
-}
-.item.muuri-item-releasing {
+.board-column.muuri-item-releasing {
   z-index: 2;
 }
-.item.muuri-item-hidden {
+.board-column.muuri-item-dragging {
+  z-index: 3;
+  cursor: move;
+}
+.board-column-header {
+  position: relative;
+  height: 50px;
+  line-height: 50px;
+  overflow: hidden;
+  padding: 0 20px;
+  text-align: center;
+  background: #333;
+  color: #fff;
+  border-radius: 3px 3px 0 0;
+}
+@media (max-width: 600px) {
+  .board-column-header {
+    text-indent: -1000px;
+  }
+}
+.board-column.todo .board-column-header {
+  background: #4A9FF9;
+}
+.board-column.working .board-column-header {
+  background: #f9944a;
+}
+.board-column.done .board-column-header {
+  background: #2ac06d;
+}
+.board-column-content {
+  position: relative;
+  border: 10px solid transparent;
+  min-height: 95px;
+}
+.board-item {
+  position: absolute;
+  width: 100%;
+  margin: 5px 0;
+}
+.board-item.muuri-item-releasing {
+  z-index: 9998;
+}
+.board-item.muuri-item-dragging {
+  z-index: 9999;
+  cursor: move;
+}
+.board-item.muuri-item-hidden {
   z-index: 0;
 }
-.item-content {
+.board-item-content {
   position: relative;
-  width: 100%;
-  height: 100%;
-  padding-top: 5px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 4px;
+  font-size: 17px;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+  box-shadow: 0px 1px 3px 0 rgba(0,0,0,0.2);
+}
+@media (max-width: 600px) {
+  .board-item-content {
+    text-align: center;
+  }
+  .board-item-content span {
+    display: none;
+  }
 }
 .taskItems{
   padding-left: 5px;
 }
+.openTaskCard{
+  background: #4A9FF9;
+  color:white;
+}
+.workingTaskCard{
+  background: #f9944a;
+  color:white;
+}
+
 </style>
 </head>
 <body>
@@ -56,22 +116,129 @@
 		<button onclick= "location.href='/tasks'">View Tasks</button>
 	</nav> 
 	<br>
-<div class="grid">
-  <div class="item" th:each="task: ${taskList}">
-    <div class="item-content" th:style="'background-color: ' + ${task.taskColor} + ';'">
+<section class="task-board">
+<div class="board muuri">
+  <div class="board-column todo muuri-item muuri-item-shown">
+  <div class="board-column-header" style="opacity: 1; transform: scale(1);">Open</div>
+  <div class="board-column-content muuri" th:each="task: ${taskOpen}">
+    <div class="board-item muuri-item muuri-item-shown openTaskCard">
     	<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
     	<br>
     	<span class="taskItems">Priority: <span th:text="${task.taskPriorityLevel}"></span></span>
     	<br>
-    	<span class="taskItems" th:text="${task.assignedTo}"></span></span>
+    	<span class="taskItems" th:text="${task.assignedTo}"></span>
     	<br>
     	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     </div>
   </div>
+  </div>
+  <div class="board-column working muuri-item muuri-item-shown">
+  <div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
+  <div class="board-column-content muuri" th:each="task: ${taskWorking}">
+    <div class="board-item muuri-item muuri-item-shown workingTaskCard">
+    	<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
+    	<br>
+    	<span class="taskItems">Priority: <span th:text="${task.taskPriorityLevel}"></span></span>
+    	<br>
+    	<span class="taskItems" th:text="${task.assignedTo}"></span>
+    	<br>
+    	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
+    </div>
+  </div>
+  </div>
 </div>
-
+</section>
 </body>
+
 <script>
-var grid = new Muuri('.grid', {dragEnabled: true});
+/*
+	Script from Muuri with slight changes
+*/
+document.addEventListener('DOMContentLoaded', function () {
+
+	  var docElem = document.documentElement;
+	  var taskBoard = document.querySelector('.task-board');
+	  var board = taskBoard.querySelector('.board');
+	  var itemContainers = Array.prototype.slice.call(taskBoard.querySelectorAll('.board-column-content'));
+	  var columnGrids = [];
+	  var dragCounter = 0;
+	  var boardGrid;
+
+	  itemContainers.forEach(function (container) {
+
+	    var muuri = new Muuri(container, {
+	      items: '.board-item',
+	      layoutDuration: 400,
+	      layoutEasing: 'ease',
+	      dragEnabled: true,
+	      dragSort: function () {
+	        return columnGrids;
+	      },
+	      dragSortHeuristics: {
+	        sortInterval: 0,
+	        minDragDistance: 0,
+	        minBounceBackAngle: 0
+	      },
+	      dragContainer: document.body,
+	      dragReleaseDuration: 400,
+	      dragReleaseEasing: 'ease'
+	    })
+	    .on('dragStart', function (item) {
+	      ++dragCounter;
+	      docElem.classList.add('dragging');
+	      item.getElement().style.width = item.getWidth() + 'px';
+	      item.getElement().style.height = item.getHeight() + 'px';
+	    })
+	    .on('dragEnd', function (item) {
+	      if (--dragCounter < 1) {
+	        docElem.classList.remove('dragging');
+	      }
+	    })
+	    .on('dragReleaseEnd', function (item) {
+		  checkTask(item.getElement());
+	      item.getElement().style.width = '';
+	      item.getElement().style.height = '';
+	      columnGrids.forEach(function (muuri) {
+	        muuri.refreshItems();
+	      });
+	    })
+	    .on('layoutStart', function () {
+	      boardGrid.refreshItems().layout();
+	    });
+
+	    columnGrids.push(muuri);
+
+	  });
+
+	  boardGrid = new Muuri(board, {
+	    layoutDuration: 400,
+	    layoutEasing: 'ease',
+	    dragEnabled: true,
+	    dragSortHeuristics: {
+	      sortInterval: 0,
+	      minDragDistance: 0,
+	      minBounceBackAngle: 0
+	    },
+	    dragStartPredicate: {
+	      handle: '.board-column-header'
+	    },
+	    dragReleaseDuration: 400,
+	    dragReleaseEasing: 'ease'
+	  });
+	});
+	function checkTask(element){
+	  var classes = element.classList;
+	  var header = element.parentElement.parentElement.classList;
+		  if(classes.contains("openTaskCard") && header.contains("working")){
+			  element.classList.remove('openTaskCard');
+			  element.classList.add('workingTaskCard');
+	    	  return;
+		  }
+		  else if(classes.contains("workingTaskCard") && header.contains("todo")){
+			  element.classList.remove('workingTaskCard');
+			  element.classList.add('openTaskCard');
+	    	  return;
+		  }
+}
 </script>
 </html>
