@@ -43,4 +43,12 @@ public class TaskSpaceController {
 		model.addAttribute("projectList", projectList);
 		return "projects";
 	}
+	@GetMapping("/grid")
+	public String createGrid(Model model) {
+		TaskDTO taskDTO = taskService.fetchByTaskId(10);
+		List<TaskDTO> taskList = taskService.fetchAllTasks(20);
+		model.addAttribute("taskDTO", taskDTO);
+		model.addAttribute("taskList", taskList);
+		return "grid";
+	}
 }
