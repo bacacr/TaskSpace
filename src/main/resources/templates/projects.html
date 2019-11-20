@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://wwww.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<link href="resources/nav.css" rel="stylesheet">
+<title>TaskSpace.com</title>
+<style>
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  height: 50px;
+}
+td {
+  text-align: left;
+  height: 25px;
+}
+</style>
+</head>
+<body>
+	<div class="topnav">
+		<a class= "header">TaskSpace</a>
+		<div class="topnav-right">
+  		<a class="navBtn" href="/">Home</a>
+  		<a class="active navBtn" href="/projects">Projects</a>
+  		<a class="navBtn" href="/tasks">Tasks</a>
+  		<a class="navBtn" href="/grid">Grid</a>
+  		</div>
+  	</div>
+	<br>
+	<div class="content-area">
+	<table>
+		<tr>
+			<th>ProjectID</th>
+			<th>Project Name</th>
+		</tr>	
+    	<tr>
+        	<td th:text="${projectDTO.projectId}"></td>
+        	<td th:text="${projectDTO.projectName}"></td>
+    	</tr>
+    </table>
+    <br>
+    <table>
+		<tr>
+			<th>ProjectID</th>
+			<th>Project Name</th>
+		</tr>	
+    	<tr th:each="project: ${projectList}">
+        	<td th:text="${project.projectId}"></td>
+        	<td th:text="${project.projectName}"></td>
+    	</tr>
+    </table>
+    </div>
+</body>
+</html>

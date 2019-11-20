@@ -1,9 +1,17 @@
 package com.taskspace;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.taskspace.dto.ProjectDTO;
+import com.taskspace.dto.TaskDTO;
+import com.taskspace.service.IProjectService;
+import com.taskspace.service.ITaskService;
 
 /**
  * @author Administrator
@@ -11,45 +19,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class TaskSpaceController {
+
+	@Autowired
+	private ITaskService taskService;
 	
+	@Autowired
+	private IProjectService projectService;
 	
-	@RequestMapping(value = "/start", method = RequestMethod.GET)
-	public String read() {
-		
-		return "start";
+	@GetMapping("/tasks")
+	public String createTasks(Model model) {
+		TaskDTO taskDTO = taskService.fetchByTaskId(10);
+		List<TaskDTO> taskList = taskService.fetchAllTasks(20);
+		model.addAttribute("taskDTO", taskDTO);
+		model.addAttribute("taskList", taskList);
+		return "tasks";
 	}
 	
-	@RequestMapping(value = "/start", method = RequestMethod.GET, params = {"loyalty=blue"})
-	public String readBlue() {
-		
-		return "start";
+	@GetMapping("/projects")
+	public String createProjects(Model model) {
+		ProjectDTO projectDTO = projectService.fetchByProjectId(10);
+		List<ProjectDTO> projectList = projectService.fetchAllProjects(20);
+		model.addAttribute("projectDTO", projectDTO);
+		model.addAttribute("projectList", projectList);
+		return "projects";
 	}
-	
-	@RequestMapping(value = "/start", method = RequestMethod.GET, params = {"loyalty=silver"})
-	public String readSilver() {
-		
-		return "start";
-	}
-	
-	@RequestMapping(value = "/start", method = RequestMethod.GET, headers = {"content-type=text/json"})
-	public String readJSON() {
-		
-		return "start";
-	}
-	
-	@PostMapping("/start")
-	public String create() {
-		
-		return "start";
-	}
-	
-	/**
-	 * @author Administrator
-	 * Handles the "/" endpoint
-	 */
-	@RequestMapping("/")
-	public String index() {
-			
-		return "index";
+	@GetMapping("/grid")
+	public String createGrid(Model model) {
+		List<TaskDTO> taskList = taskService.fetchTasksForGrid(20);
+		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
+		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
+		model.addAttribute("taskWorking", taskWorking);
+		model.addAttribute("taskOpen", taskOpen);
+		return "grid";
 	}
 }
