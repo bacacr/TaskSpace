@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="src/main/resources/static/resources/index.css">
-
 <meta charset="ISO-8859-1">
-
-<!--Implements libraries from https://shopify.github.io/draggable-->
-<!-- Draggable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/draggable.js"></script>
-<!-- Sortable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/sortable.js"></script>
-<!-- Droppable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/droppable.js"></script>
-<!-- Swappable only -->
-<script src="https://cdn.jsdelivr.net/npm/@shopify/draggable@1.0.0-beta.6/lib/swappable.js"></script>
+<link href="resources/nav.css" rel="stylesheet">
 <title>TaskSpace.com</title>
 </head>
 <body>
-	<h1>TaskSpace</h1>
-	<nav>
-		<button onclick= "location.href='/tasks'">View Tasks</button>
-		<button onclick= "location.href='/projects'">View Projects</button>
-		<button onclick= "location.href='/grid'">View Grid</button>
-	</nav> 
+	<div class="topnav">
+		<a class= "header">TaskSpace</a>
+		<div class="topnav-right">
+  		<a class="active navBtn" href="/">Home</a>
+  		<a class="navBtn" href="/projects">Projects</a>
+  		<a class="navBtn" href="/tasks">Tasks</a>
+  		<a class="navBtn" href="/grid">Grid</a>
+  		</div>
+  	</div>
 	<br>	
 </body>
 </html>
