@@ -12,7 +12,9 @@ public class ProjectServiceStub implements IProjectService{
 	public ProjectDTO fetchByProjectId(int projectId) {
 		ProjectDTO projectDTO = new ProjectDTO();
 		projectDTO.setProjectId(projectId);
-		projectDTO.setProjectName("Project");
+		projectDTO.setProjectName("Name");
+		projectDTO.setProjectDesc("Description");
+		projectDTO.setProjectMembers("Tyler, Richard, Arnold");
 		return projectDTO;
 	}
 	
@@ -23,7 +25,9 @@ public class ProjectServiceStub implements IProjectService{
 		while(i < 10) {
 			ProjectDTO projectDTO = new ProjectDTO();
 			projectDTO.setProjectId(i);
-			projectDTO.setProjectName("Project");
+			projectDTO.setProjectName("Name");
+			projectDTO.setProjectDesc("Description");
+			projectDTO.setProjectMembers("Tom, Abigail, Nikolai, Brianna");
 			projectList.add(projectDTO);
 			i++;
 		}

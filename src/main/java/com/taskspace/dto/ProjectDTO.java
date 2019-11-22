@@ -4,6 +4,8 @@ public class ProjectDTO
 {
 	private int projectId;
 	private String projectName;
+	private String projectDesc;
+	private String projectMembers;
 	private int projectOwnerId;
 	private int linkId;
 	private boolean isShareable;
@@ -33,6 +35,26 @@ public class ProjectDTO
 		this.projectName = projectName;
 	}
 	
+	public String getProjectDesc() 
+	{
+		return projectDesc;
+	}
+	
+	public void setProjectDesc(String projectDesc) 
+	{
+		this.projectDesc = projectDesc;
+	}
+	
+	public String getProjectMembers() 
+	{
+		return projectMembers;
+	}
+	
+	public void setProjectMembers(String projectMembers) 
+	{
+		this.projectMembers = projectMembers;
+	}
+	
 	public int getProjectOwnerId() 
 	{
 		return projectOwnerId;
@@ -42,6 +64,7 @@ public class ProjectDTO
 	{
 		this.projectOwnerId = projectOwnerId;
 	}
+	
 	public int getLinkId() {
 		return linkId;
 	}

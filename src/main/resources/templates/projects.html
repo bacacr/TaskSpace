@@ -39,10 +39,14 @@ td {
 		<tr>
 			<th>ProjectID</th>
 			<th>Project Name</th>
+			<th>Project Description</th>
+			<th>Team Members</th>
 		</tr>	
     	<tr>
         	<td th:text="${projectDTO.projectId}"></td>
-        	<td th:text="${projectDTO.projectName}"></td>
+        	<td><button th:text="${projectDTO.projectName}" onclick="location.href='/tasks'"></button></td>
+        	<td th:text="${projectDTO.projectDesc}"></td>
+        	<td th:text="${projectDTO.projectMembers}"></td>
     	</tr>
     </table>
     <br>
@@ -50,10 +54,14 @@ td {
 		<tr>
 			<th>ProjectID</th>
 			<th>Project Name</th>
+			<th>Project Description</th>
+			<th>Team Members</th>
 		</tr>	
     	<tr th:each="project: ${projectList}">
         	<td th:text="${project.projectId}"></td>
-        	<td th:text="${project.projectName}"></td>
+        	<td><button th:text="${project.projectName}" onclick="location.href='/tasks'"></button></td>
+        	<td th:text="${project.projectDesc}"></td>
+        	<td th:text="${project.projectMembers}"></td>
     	</tr>
     </table>
     </div>
