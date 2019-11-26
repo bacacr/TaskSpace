@@ -33,13 +33,14 @@
     			<div class="board-item muuri-item muuri-item-shown openTaskCard">
     				<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
     				<br>
-    				<span class="taskItems">Priority: <span th:text="${task.taskPriorityLevel}"></span></span>
+    				<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
     				<br>
-    				<span class="taskItems" th:text="${task.assignedTo}"></span>
+    				<span class="taskItems" th:text="${task.taskAssignedTo}"></span>
     				<br>
     				<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     			</div>
   			</div>
+  			  			<button class="addBtn" type=button onclick="location.href = '/addTask';">Add +</button>
   		</div>
   <div class="board-column working muuri-item muuri-item-shown">
   <div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
@@ -47,9 +48,9 @@
     <div class="board-item muuri-item muuri-item-shown workingTaskCard">
     	<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
     	<br>
-    	<span class="taskItems">Priority: <span th:text="${task.taskPriorityLevel}"></span></span>
+    	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
     	<br>
-    	<span class="taskItems" th:text="${task.assignedTo}"></span>
+    	<span class="taskItems" th:text="${task.taskAssignedTo}"></span>
     	<br>
     	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     </div>

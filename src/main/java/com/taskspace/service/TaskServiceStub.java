@@ -3,18 +3,22 @@ package com.taskspace.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.taskspace.dao.TaskRepository;
 import com.taskspace.dto.TaskDTO;
 @Component
 public class TaskServiceStub implements ITaskService{
-	
+	@Autowired
+	TaskRepository taskRepository;
 	@Override
 	public TaskDTO fetchByTaskId(int taskId) {
 		TaskDTO taskDTO = new TaskDTO();
 		taskDTO.setTaskId(taskId);
-		taskDTO.setTaskColor("blue");
-		taskDTO.setTaskPriorityLevel(5);
-		taskDTO.setAssignedTo("Thomas");
+		taskDTO.setTaskDescription("blue");
+		taskDTO.setTaskPriority(5);
+		taskDTO.setTaskAssignedTo("Thomas");
 		return taskDTO;
 	}
 	
@@ -27,14 +31,14 @@ public class TaskServiceStub implements ITaskService{
 			if(i % 2 == 0) {
 				taskDTO.setTaskId(i);
 				taskDTO.setTaskColor("blue");
-				taskDTO.setTaskPriorityLevel(5);
-				taskDTO.setAssignedTo("Thomas");
+				taskDTO.setTaskPriority(5);
+				taskDTO.setTaskAssignedTo("Thomas");
 			}
 			else {
 				taskDTO.setTaskId(i);
 				taskDTO.setTaskColor("red");
-				taskDTO.setTaskPriorityLevel(2);
-				taskDTO.setAssignedTo("David");
+				taskDTO.setTaskPriority(2);
+				taskDTO.setTaskAssignedTo("David");
 			}
 			taskList.add(taskDTO);
 			i++;
@@ -50,14 +54,14 @@ public class TaskServiceStub implements ITaskService{
 			if(i % 2 == 0) {
 				taskDTO.setTaskId(i);
 				taskDTO.setTaskColor("#4A9FF9");
-				taskDTO.setTaskPriorityLevel(5);
-				taskDTO.setAssignedTo("Thomas");
+				taskDTO.setTaskPriority(5);
+				taskDTO.setTaskAssignedTo("Thomas");
 			}
 			else {
 				taskDTO.setTaskId(i);
 				taskDTO.setTaskColor("#f9944a");
-				taskDTO.setTaskPriorityLevel(2);
-				taskDTO.setAssignedTo("David");
+				taskDTO.setTaskPriority(2);
+				taskDTO.setTaskAssignedTo("David");
 			}
 			taskList.add(taskDTO);
 			i++;
@@ -78,10 +82,16 @@ public class TaskServiceStub implements ITaskService{
 	public List<TaskDTO> fetchOpenTasks(List<TaskDTO> tasks) {
 		List<TaskDTO> taskOpen = new ArrayList<TaskDTO>();;
 		for (TaskDTO task: tasks) {
-			if(task.getTaskColor() == "#4A9FF9") {
+			if(task.getTaskColor().equals("#4A9FF9")) {
 				taskOpen.add(task);
 			}
 		}
 		return taskOpen;
+	}
+	
+	@Override
+	public List<TaskDTO> fetchTasks(int projectId) {
+		
+		return (List<TaskDTO>) taskRepository.findAllProjectTasks(projectId);
 	}
 }

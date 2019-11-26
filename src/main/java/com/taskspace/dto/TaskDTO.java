@@ -1,31 +1,34 @@
 package com.taskspace.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="task")
 public class TaskDTO 
 {
-	private int[] taskList;
+	@Id
+	@Column(name="TASK_ID")
 	private int taskId;
-	private int taskLocation;
-	private int taskPriorityLevel;
-	private String taskColor;
-	private boolean isUpdated;
-	private boolean isTaskShareable;
+	@Column(name="PRIORITY")
+	private int taskPriority;
+	@Column(name="DESCRIPTION")
+	private String taskDescription;
+	@Column(name="ASSIGNED_TO")
+	private String taskAssignedTo;
+	@Column(name="PROJECT_ID")
 	private int projectId;
-	private String assignedTo;
-	
+	@Column(name="TASK_COLOR")
+	private String taskColor;
 	/**
 	 * Getters and setters for each task
 	 * the user creates
 	 * @return
 	 */
-	public int[] getTaskList() 
-	{
-		return taskList;
-	}
-	
-	public void setTaskList(int[] taskList) 
-	{
-		this.taskList = taskList;
-	}
 	
 	public int getTaskId() 
 	{
@@ -37,26 +40,39 @@ public class TaskDTO
 		this.taskId = taskId;
 	}
 	
-	public int getTaskLocation() 
+	public String getTaskDescription() 
 	{
-		return taskLocation;
+		return taskDescription;
 	}
 	
-	public void setTaskLocation(int taskLocation) 
+	public void setTaskDescription(String taskDescription) 
 	{
-		this.taskLocation = taskLocation;
+		this.taskDescription = taskDescription;
 	}
 	
-	public int getTaskPriorityLevel() 
+	
+	public int getTaskPriority() 
 	{
-		return taskPriorityLevel;
+		return taskPriority;
 	}
 	
-	public void setTaskPriorityLevel(int taskPriorityLevel) 
+	public void setTaskPriority(int taskPriority) 
 	{
-		this.taskPriorityLevel = taskPriorityLevel;
+		this.taskPriority = taskPriority;
 	}
 	
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	public String getTaskAssignedTo() {
+		return taskAssignedTo;
+	}
+	public void setTaskAssignedTo(String taskAssignedTo) {
+		this.taskAssignedTo = taskAssignedTo;
+	}
 	public String getTaskColor() 
 	{
 		return taskColor;
@@ -65,37 +81,5 @@ public class TaskDTO
 	public void setTaskColor(String taskColor) 
 	{
 		this.taskColor = taskColor;
-	}
-	
-	public boolean isUpdated() 
-	{
-		return isUpdated;
-	}
-	
-	public void setUpdated(boolean isUpdated) 
-	{
-		this.isUpdated = isUpdated;
-	}
-	
-	public boolean isTaskShareable() 
-	{
-		return isTaskShareable;
-	}
-	
-	public void setTaskShareable(boolean isTaskShareable) 
-	{
-		this.isTaskShareable = isTaskShareable;
-	}
-	public int getProjectId() {
-		return projectId;
-	}
-	public void setProjectId(int projectId) {
-		this.projectId = projectId;
-	}
-	public String getAssignedTo() {
-		return assignedTo;
-	}
-	public void setAssignedTo(String assignedTo) {
-		this.assignedTo = assignedTo;
 	}
 }

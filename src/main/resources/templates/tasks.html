@@ -44,8 +44,8 @@ td {
 		</tr>	
     	<tr>
         	<td th:text="${taskDTO.taskId}"></td>
-        	<td th:text="${taskDTO.taskPriorityLevel}"></td>
-        	<td th:text="${taskDTO.assignedTo}"></td>
+        	<td th:text="${taskDTO.taskPriority}"></td>
+        	<td th:text="${taskDTO.taskAssignedTo}"></td>
         	<td th:style="'background-color: ' + ${taskDTO.taskColor} + '; color: white'" th:text="${taskDTO.taskColor}"></td>
     	</tr>
     </table>
@@ -59,8 +59,8 @@ td {
 		</tr>	
     	<tr th:each="task: ${taskList}">
         	<td th:text="${task.taskId}"></td>
-        	<td th:text="${task.taskPriorityLevel}"></td>
-        	<td th:text="${task.assignedTo}"></td>
+        	<td th:text="${task.taskPriority}"></td>
+        	<td th:text="${task.taskAssignedTo}"></td>
         	<td th:style="'background-color: ' + ${task.taskColor} + '; color: white'" th:text="${task.taskColor}"></td>
     	</tr>
     </table>

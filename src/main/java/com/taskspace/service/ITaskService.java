@@ -13,4 +13,6 @@ public interface ITaskService {
 	List<TaskDTO> fetchInProgressTasks(List<TaskDTO> tasks);
 	List<TaskDTO> fetchOpenTasks(List<TaskDTO> tasks);
 
+	List<TaskDTO> fetchTasks(int projectId);
+
 }
