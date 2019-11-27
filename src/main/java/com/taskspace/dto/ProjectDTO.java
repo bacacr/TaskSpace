@@ -1,14 +1,25 @@
 package com.taskspace.dto;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="project")
 public class ProjectDTO 
 {
+	@Id
+	@Column(name="PROJECT_ID")
 	private int projectId;
+	@Column(name="NAME")
 	private String projectName;
+	@Column(name="DESCRIPTION")
 	private String projectDesc;
+	@Column(name="MEMBERS")
 	private String projectMembers;
-	private int projectOwnerId;
-	private int linkId;
-	private boolean isShareable;
+	//private int linkId;
+	//private boolean isShareable;
 	
 	/**
 	 * Getters and setters for each project
@@ -54,7 +65,7 @@ public class ProjectDTO
 	{
 		this.projectMembers = projectMembers;
 	}
-	
+	/*
 	public int getProjectOwnerId() 
 	{
 		return projectOwnerId;
@@ -77,4 +88,5 @@ public class ProjectDTO
 	public void setIsShareable(boolean isShareable) {
 		this.isShareable = isShareable;
 	}
+	*/
 }

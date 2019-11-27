@@ -35,27 +35,19 @@ td {
   	</div>
 	<br>
 	<div class="content-area">
-		<form th:action="@{/addTask}" th:object="${newTask}" method="post">
+		<form th:action="@{/addProject}" th:object="${newProject}" method="post">
 			<div align="center">
-				<label>TaskPriority</label>
-				<br>
-				<select id="taskPriority" th:field="*{taskPriority}" name="Priority">
-					<option value="1">1</option>
-  					<option value="2">2</option>
-  					<option value="3">3</option>
-  					<option value="4">4</option>
-  					<option value="5">5</option>
-				</select>
-				<br>
-				<label>TaskDescription</label>
+				<label>Project Name</label>
 				<br>				
-				<input type="text" id="taskDescription" th:field="*{taskDescription}" placeholder="Description"></input>
+				<input type="text" id="projectName" th:field="*{projectName}" placeholder="Name"></input>
 				<br>
-				<label>TaskAssignedTo</label>
+				<label>Project Description</label>
 				<br>
-				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="taskAssignedTo"></input>
+				<input type="text" id="projectDesc" th:field="*{projectDesc}" placeholder="Description"></input>
 				<br/>
-				<input type="text" id="projectId" th:text="${projectId}" th:field="*{projectId}" placeholder="projectId"></input>
+				<label>Project Members</label>
+				<br>
+				<input type="text" id="projectMembers" th:text="${projectMembers}" th:field="*{projectMembers}" placeholder="Members"></input>
 				<br/>
         		<br/>
         		<input class="submitbutton" type="submit" value="Submit"/>

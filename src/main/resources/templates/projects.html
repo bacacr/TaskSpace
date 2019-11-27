@@ -3,6 +3,7 @@
 <head>
 <meta charset="ISO-8859-1">
 <link href="resources/nav.css" rel="stylesheet">
+<link href="resources/projects.css" rel="stylesheet">
 <title>TaskSpace.com</title>
 <style>
 table, td, th {
@@ -34,36 +35,29 @@ td {
   		</div>
   	</div>
 	<br>
-	<div class="content-area">
-	<table>
-		<tr>
-			<th>ProjectID</th>
-			<th>Project Name</th>
-			<th>Project Description</th>
-			<th>Team Members</th>
-		</tr>	
-    	<tr>
-        	<td th:text="${projectDTO.projectId}"></td>
-        	<td><button th:text="${projectDTO.projectName}" onclick="location.href='/tasks'"></button></td>
-        	<td th:text="${projectDTO.projectDesc}"></td>
-        	<td th:text="${projectDTO.projectMembers}"></td>
-    	</tr>
-    </table>
-    <br>
-    <table>
-		<tr>
-			<th>ProjectID</th>
-			<th>Project Name</th>
-			<th>Project Description</th>
-			<th>Team Members</th>
-		</tr>	
-    	<tr th:each="project: ${projectList}">
-        	<td th:text="${project.projectId}"></td>
-        	<td><button th:text="${project.projectName}" onclick="location.href='/tasks'"></button></td>
-        	<td th:text="${project.projectDesc}"></td>
-        	<td th:text="${project.projectMembers}"></td>
-    	</tr>
-    </table>
-    </div>
+	<div class="row">
+		<form th:each="project: ${projectList}" class="box" th:onclick="'location.href=\'/taskBoard?&projectId=' + ${project.projectId} + '\''">
+    		<div class="column">
+	  			<div class="card">
+    				<h4 class="label" th:text="${project.projectDesc}"><b></b></h4>
+    				<p th:text="${project.projectMembers}"></p>
+    			</div>
+			</div>
+    	</form>
+    	<div class="column">
+	  		<div class="newCard" onclick="location.href= '/addProject'">
+    			<h4 class="label"><b>+</b></h4>
+    		</div>
+		</div>
+	</div>
+	<!--  
+	<div class="wrapper">
+  		<form th:each="project: ${projectList}" class="box" th:onclick="'location.href=\'/taskBoard?&projectId=' + ${project.projectId} + '\''">
+  			<a th:text="${project.projectDesc}"></a>
+  			<a th:text="${project.projectMembers}"></a>
+  			<a th:text="${project.projectId}"></a>
+  		</form>
+  	</div>
+  	-->
 </body>
 </html>

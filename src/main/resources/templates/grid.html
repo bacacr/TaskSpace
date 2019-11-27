@@ -25,6 +25,7 @@
   	</div>
 	<br>
 <div class="content-area">
+	<p id="project-id" th:text="${projectId}" hidden=true></p>
 	<section class="task-board">
 	<div class="board muuri">
   		<div class="board-column todo muuri-item muuri-item-shown">
@@ -40,7 +41,7 @@
     				<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     			</div>
   			</div>
-  			  			<button class="addBtn" type=button onclick="location.href = '/addTask';">Add +</button>
+  			<button class="addBtn" type=button th:onclick="'location.href=\'/addTask?&projectId=' + ${projectId} + '\''">Add +</button>
   		</div>
   <div class="board-column working muuri-item muuri-item-shown">
   <div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
@@ -54,6 +55,7 @@
     	<br>
     	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     </div>
+    <button class="addBtn" type=button th:onclick="'location.href=\'/addTask?&projectId=' + ${projectId} + '\''">Add +</button>
   </div>
   </div>
 </div>

@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.taskspace.dao.ProjectRepository;
 import com.taskspace.dao.TaskRepository;
 import com.taskspace.dto.ProjectDTO;
 import com.taskspace.dto.TaskDTO;
@@ -32,6 +34,9 @@ public class TaskSpaceController {
 	@Autowired
 	private TaskRepository taskRepository;
 	
+	@Autowired
+	private ProjectRepository projectRepository;
+	
 	@GetMapping("/tasks")
 	public String createTasks(Model model) {
 		TaskDTO taskDTO = taskService.fetchByTaskId(10);
@@ -42,20 +47,19 @@ public class TaskSpaceController {
 	}
 	
 	@GetMapping("/taskBoard")
-	public String getTaskBoard(Model model) {
-		List<TaskDTO> taskList = taskRepository.findAllProjectTasks(10);
+	public String getTaskBoard(@RequestParam("projectId") int projectId, Model model) {
+		List<TaskDTO> taskList = taskRepository.findAllProjectTasks(projectId);
 		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
 		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
 		model.addAttribute("taskWorking", taskWorking);
 		model.addAttribute("taskOpen", taskOpen);
+		model.addAttribute("projectId", projectId);
 		return "grid";
 	}
 
 	@GetMapping("/projects")
 	public String createProjects(Model model) {
-		ProjectDTO projectDTO = projectService.fetchByProjectId(10);
-		List<ProjectDTO> projectList = projectService.fetchAllProjects(20);
-		model.addAttribute("projectDTO", projectDTO);
+		Iterable<ProjectDTO> projectList = projectService.fetchAllProjects();
 		model.addAttribute("projectList", projectList);
 		return "projects";
 	}
@@ -68,16 +72,25 @@ public class TaskSpaceController {
 		model.addAttribute("taskOpen", taskOpen);
 		return "grid";
 	}
-	@GetMapping("/addTask")
-	public String addTask(@ModelAttribute("newTask") TaskDTO form) {
-		return "addTask";
-	}
 	@PostMapping("/addTask")
 	public String addTaskSubmit(@ModelAttribute("newTask") TaskDTO form, RedirectAttributes redirectAttributes) {
-		form.setProjectId(10);
+		form.setProjectId(form.getProjectId());
 		form.setTaskColor("#4A9FF9");
 		taskRepository.save(form);
-		return "redirect:/taskBoard";
+		return "redirect:/taskBoard?&projectId=" + form.getProjectId();
 	}
-
+	@GetMapping("/addTask")
+	public String addProjectTask(@RequestParam("projectId") int projectId, @ModelAttribute("newTask") TaskDTO form, Model model) {
+		model.addAttribute("projectId", projectId);
+		return "addTask";
+	}
+	@GetMapping("/addProject")
+	public String addNewProject(@ModelAttribute("newProject") ProjectDTO form) {
+		return "addProject";
+	}
+	@PostMapping("/addProject")
+	public String addProject(@ModelAttribute("newProject") ProjectDTO form, RedirectAttributes redirectAttributes) {
+		projectRepository.save(form);
+		return "redirect:/projects";
+	}
 }
