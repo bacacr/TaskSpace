@@ -47,7 +47,7 @@ public class TaskSpaceController {
 	}
 	
 	@GetMapping("/taskBoard")
-	public String getTaskBoard(@RequestParam("projectId") int projectId, Model model) {
+	public String getTaskBoard(@ModelAttribute("newTask") TaskDTO form, @RequestParam("projectId") int projectId, Model model) {
 		List<TaskDTO> taskList = taskRepository.findAllProjectTasks(projectId);
 		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
 		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
@@ -58,7 +58,7 @@ public class TaskSpaceController {
 	}
 
 	@GetMapping("/projects")
-	public String createProjects(Model model) {
+	public String createProjects(@ModelAttribute("newProject") ProjectDTO form, Model model) {
 		Iterable<ProjectDTO> projectList = projectService.fetchAllProjects();
 		model.addAttribute("projectList", projectList);
 		return "projects";

@@ -4,6 +4,7 @@
 <meta charset="ISO-8859-1">
 <link href="resources/nav.css" rel="stylesheet">
 <link href="resources/task-board.css" rel="stylesheet">
+<link href="resources/modal.css" rel="stylesheet">
 <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
 <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
 <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
@@ -41,7 +42,7 @@
     				<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     			</div>
   			</div>
-  			<button class="addBtn" type=button th:onclick="'location.href=\'/addTask?&projectId=' + ${projectId} + '\''">Add +</button>
+  			<button id="myBtn"  class="addBtn" type=button>Add +</button>
   		</div>
   <div class="board-column working muuri-item muuri-item-shown">
   <div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
@@ -55,12 +56,60 @@
     	<br>
     	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
     </div>
-    <button class="addBtn" type=button th:onclick="'location.href=\'/addTask?&projectId=' + ${projectId} + '\''">Add +</button>
   </div>
+  <button id="myBtn" class="addBtn" type=button>Add +</button>
+  </div>
+  <div class="board-column done muuri-item muuri-item-shown">
+  <div class="board-column-header" style="opacity: 1; transform: scale(1);">Finished</div>
+  <div class="board-column-content muuri" th:each="task: ${taskWorking}">
+    <div class="board-item muuri-item muuri-item-shown workingTaskCard">
+    	<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
+    	<br>
+    	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
+    	<br>
+    	<span class="taskItems" th:text="${task.taskAssignedTo}"></span>
+    	<br>
+    	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
+    </div>
+  </div>
+  <button id="myBtn" class="addBtn" type=button>Add +</button>
   </div>
 </div>
 </section>
 </div>
+	<div id="myModal" class="modal">
+  	<!-- Modal content -->
+  	<div class="modal-content">
+    	<span class="close">&times;</span>
+		<form th:action="@{/addTask}" th:object="${newTask}" method="post">
+			<div align="center">
+				<label>TaskPriority</label>
+				<br>
+				<select id="taskPriority" th:field="*{taskPriority}" name="Priority">
+					<option value="1">1</option>
+  					<option value="2">2</option>
+  					<option value="3">3</option>
+  					<option value="4">4</option>
+  					<option value="5">5</option>
+				</select>
+				<br>
+				<label>TaskDescription</label>
+				<br>				
+				<input type="text" id="taskDescription" th:field="*{taskDescription}" placeholder="Description"></input>
+				<br>
+				<label>TaskAssignedTo</label>
+				<br>
+				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="taskAssignedTo"></input>
+				<br/>
+				<input type="text" id="projectId" th:field="*{projectId}" placeholder="projectId" hidden=true></input>
+				<br/>
+        		<br/>
+        		<input class="submitbutton" type="submit" value="Submit"/>
+        		<br/>
+			</div>
+		</form>
+  	</div>
+  	</div>
 </body>
 
 <script>
@@ -137,6 +186,31 @@ document.addEventListener('DOMContentLoaded', function () {
 	    dragReleaseDuration: 400,
 	    dragReleaseEasing: 'ease'
 	  });
+	  
+	  	var modal = document.getElementById("myModal");
+
+  	 	// Get the button that opens the modal
+  	 	var btn = document.getElementById("myBtn");
+
+  	 	// Get the <span> element that closes the modal
+  	 	var span = document.getElementsByClassName("close")[0];
+
+  	 	// When the user clicks the button, open the modal 
+  	 	btn.onclick = function() {
+  	   		modal.style.display = "block";
+  	 	}
+
+  	 	// When the user clicks on <span> (x), close the modal
+  	 	span.onclick = function() {
+  	   		modal.style.display = "none";
+  	 	}
+
+  	 	// When the user clicks anywhere outside of the modal, close it
+  	 	window.onclick = function(event) {
+  	   		if (event.target == modal) {
+  	     		modal.style.display = "none";
+  	   		}
+  	 	}
 	});
 	function checkTask(element){
 	  var classes = element.classList;
