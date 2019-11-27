@@ -76,6 +76,10 @@ public class TaskServiceStub implements ITaskService{
 				taskWorking.add(task);
 			}
 		}
+		if(taskWorking.isEmpty()) {
+			TaskDTO task = new TaskDTO();
+			taskWorking.add(task);
+		}
 		return taskWorking;
 	}
 	@Override
@@ -85,6 +89,10 @@ public class TaskServiceStub implements ITaskService{
 			if(task.getTaskColor().equals("#4A9FF9")) {
 				taskOpen.add(task);
 			}
+		}
+		if(taskOpen.isEmpty()) {
+			TaskDTO task = new TaskDTO();
+			taskOpen.add(task);
 		}
 		return taskOpen;
 	}

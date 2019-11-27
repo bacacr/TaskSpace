@@ -33,7 +33,7 @@
   			<div class="board-column-header" style="opacity: 1; transform: scale(1);">Open</div>
   			<div class="board-column-content muuri" th:each="task: ${taskOpen}">
     			<div class="board-item muuri-item muuri-item-shown openTaskCard">
-    				<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
+    				<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
     				<br>
     				<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
     				<br>
@@ -48,7 +48,7 @@
   <div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
   <div class="board-column-content muuri" th:each="task: ${taskWorking}">
     <div class="board-item muuri-item muuri-item-shown workingTaskCard">
-    	<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
+    	<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
     	<br>
     	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
     	<br>
@@ -62,8 +62,8 @@
   <div class="board-column done muuri-item muuri-item-shown">
   <div class="board-column-header" style="opacity: 1; transform: scale(1);">Finished</div>
   <div class="board-column-content muuri" th:each="task: ${taskWorking}">
-    <div class="board-item muuri-item muuri-item-shown workingTaskCard">
-    	<span class="taskItems">ID: <span th:text= "${task.taskId}"></span></span>
+    <div class="board-item muuri-item muuri-item-shown taskCard">
+    	<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
     	<br>
     	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
     	<br>
@@ -211,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
   	     		modal.style.display = "none";
   	   		}
   	 	}
+  	 	checkForEmpty();
 	});
 	function checkTask(element){
 	  var classes = element.classList;
@@ -220,11 +221,40 @@ document.addEventListener('DOMContentLoaded', function () {
 			  element.classList.add('workingTaskCard');
 	    	  return;
 		  }
+		  else if(classes.contains("openTaskCard") && header.contains("done")){
+			  element.classList.remove('openTaskCard');
+			  element.classList.add('doneTaskCard');
+	    	  return;
+		  }
 		  else if(classes.contains("workingTaskCard") && header.contains("todo")){
 			  element.classList.remove('workingTaskCard');
 			  element.classList.add('openTaskCard');
 	    	  return;
 		  }
-}
+		  else if(classes.contains("workingTaskCard") && header.contains("done")){
+			  element.classList.remove('workingTaskCard');
+			  element.classList.add('doneTaskCard');
+	    	  return;
+		  }
+		  else if(classes.contains("doneTaskCard") && header.contains("todo")){
+			  element.classList.remove('doneTaskCard');
+			  element.classList.add('openTaskCard');
+	    	  return;
+		  }
+		  else if(classes.contains("doneTaskCard") && header.contains("working")){
+			  element.classList.remove('doneTaskCard');
+			  element.classList.add('workingTaskCard');
+	    	  return;
+		  }
+	}
+	function checkForEmpty(){
+		var taskElement = document.getElementsByClassName("taskID");
+		for(var i=0; taskElement.length > i; i++){
+			if(taskElement[i].innerText == "ID: 0"){
+				var task = taskElement[i].parentNode;
+				task.style.visibility = "hidden";	
+		}
+		}
+	}
 </script>
 </html>

@@ -95,6 +95,14 @@
 .workingTaskCard{
   background: #f9944a;
   color:white;
+
+}
+.doneTaskCard{
+	background: #2ac06d;
+	color: white;
+}
+.taskCard{
+	padding-bottom: 25px !important;
 }
 .addBtn{
 	width: 100%;
