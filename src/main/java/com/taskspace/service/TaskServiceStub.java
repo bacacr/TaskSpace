@@ -70,9 +70,9 @@ public class TaskServiceStub implements ITaskService{
 	}
 	@Override
 	public List<TaskDTO> fetchInProgressTasks(List<TaskDTO> tasks) {
-		List<TaskDTO> taskWorking = new ArrayList<TaskDTO>();;
+		List<TaskDTO> taskWorking = new ArrayList<TaskDTO>();
 		for (TaskDTO task: tasks) {
-			if(task.getTaskColor() == "#f9944a") {
+			if(task.getTaskColor().equals("#f9944a")) {
 				taskWorking.add(task);
 			}
 		}
@@ -81,6 +81,20 @@ public class TaskServiceStub implements ITaskService{
 			taskWorking.add(task);
 		}
 		return taskWorking;
+	}
+	@Override
+	public List<TaskDTO> fetchDoneTasks(List<TaskDTO> tasks) {
+		List<TaskDTO> taskDone = new ArrayList<TaskDTO>();
+		for (TaskDTO task: tasks) {
+			if(task.getTaskColor().equals("#2ac06d")) {
+				taskDone.add(task);
+			}
+		}
+		if(taskDone.isEmpty()) {
+			TaskDTO task = new TaskDTO();
+			taskDone.add(task);
+		}
+		return taskDone;
 	}
 	@Override
 	public List<TaskDTO> fetchOpenTasks(List<TaskDTO> tasks) {

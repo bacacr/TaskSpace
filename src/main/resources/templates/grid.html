@@ -61,8 +61,8 @@
   </div>
   <div class="board-column done muuri-item muuri-item-shown">
   <div class="board-column-header" style="opacity: 1; transform: scale(1);">Finished</div>
-  <div class="board-column-content muuri" th:each="task: ${taskWorking}">
-    <div class="board-item muuri-item muuri-item-shown taskCard">
+  <div class="board-column-content muuri" th:each="task: ${taskDone}">
+    <div class="board-item muuri-item muuri-item-shown doneTaskCard">
     	<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
     	<br>
     	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
@@ -101,6 +101,8 @@
 				<br>
 				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="taskAssignedTo"></input>
 				<br/>
+				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="taskAssignedTo" hidden=true></input>
+				<br/>
 				<input type="text" id="projectId" th:field="*{projectId}" placeholder="projectId" hidden=true></input>
 				<br/>
         		<br/>
@@ -112,7 +114,7 @@
   	</div>
 </body>
 
-<script>
+<script th:inline="javascript">
 /*
 	Script from Muuri with slight changes
 */
@@ -214,36 +216,49 @@ document.addEventListener('DOMContentLoaded', function () {
   	 	checkForEmpty();
 	});
 	function checkTask(element){
+	  var color = '';
 	  var classes = element.classList;
 	  var header = element.parentElement.parentElement.classList;
 		  if(classes.contains("openTaskCard") && header.contains("working")){
 			  element.classList.remove('openTaskCard');
 			  element.classList.add('workingTaskCard');
+			  color = '#f9944a';
+			  updateTask(element, color);
 	    	  return;
 		  }
 		  else if(classes.contains("openTaskCard") && header.contains("done")){
 			  element.classList.remove('openTaskCard');
 			  element.classList.add('doneTaskCard');
+			  color = '#2ac06d';
+			  updateTask(element, color);
 	    	  return;
 		  }
 		  else if(classes.contains("workingTaskCard") && header.contains("todo")){
 			  element.classList.remove('workingTaskCard');
 			  element.classList.add('openTaskCard');
+			  color = '#4A9FF9';
+			  updateTask(element, color);
 	    	  return;
 		  }
 		  else if(classes.contains("workingTaskCard") && header.contains("done")){
 			  element.classList.remove('workingTaskCard');
 			  element.classList.add('doneTaskCard');
+			  color = '#2ac06d';
+			  updateTask(element, color);
 	    	  return;
 		  }
 		  else if(classes.contains("doneTaskCard") && header.contains("todo")){
 			  element.classList.remove('doneTaskCard');
 			  element.classList.add('openTaskCard');
+			  color = '#4A9FF9';
+			  updateTask(element, color);
 	    	  return;
 		  }
 		  else if(classes.contains("doneTaskCard") && header.contains("working")){
 			  element.classList.remove('doneTaskCard');
 			  element.classList.add('workingTaskCard');
+			  color = '#f9944a';
+			  updateTask(element, color);
 	    	  return;
 		  }
 	}
@@ -255,6 +270,36 @@ document.addEventListener('DOMContentLoaded', function () {
 				task.style.visibility = "hidden";	
 		}
 		}
+	}
+	function updateTask(element, color){
+		var task = element.innerText;
+		var taskId = getTaskId(task)
+		var tasks =/*[[${taskOpen}]]*/ 'defaultanyvalue';
+		var length = tasks.length;
+		for(i = 0; length > i; i++){
+			if(tasks[i].taskId = taskId){
+				task = JSON.stringify(updateTaskColor(tasks[i], color));
+				taskUpdateColor(task);
+				return task.taskId;
+			}
+		}
+	}
+	function getTaskId(task){
+		var id = task.split('\n', 1)[0];
+		id = id.split(/\s(.+)/)[1]; 
+		return id;
+	}
+	function taskUpdateColor(task){
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", 'http://localhost:8080/updateTaskColor', true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(task);
+	}
+	function updateTaskColor(task, color){
+		if(color != ''){
+			task.taskColor = color;
+		}
+		return task; 
 	}
 </script>
 </html>

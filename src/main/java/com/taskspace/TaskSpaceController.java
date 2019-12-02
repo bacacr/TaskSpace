@@ -2,12 +2,17 @@ package com.taskspace;
 
 import java.util.List;
 
+import javax.persistence.Column;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -50,9 +55,11 @@ public class TaskSpaceController {
 	public String getTaskBoard(@ModelAttribute("newTask") TaskDTO form, @RequestParam("projectId") int projectId, Model model) {
 		List<TaskDTO> taskList = taskRepository.findAllProjectTasks(projectId);
 		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
+		List<TaskDTO> taskDone = taskService.fetchDoneTasks(taskList);
 		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
 		model.addAttribute("taskWorking", taskWorking);
 		model.addAttribute("taskOpen", taskOpen);
+		model.addAttribute("taskDone", taskDone);
 		model.addAttribute("projectId", projectId);
 		return "grid";
 	}
@@ -93,4 +100,11 @@ public class TaskSpaceController {
 		projectRepository.save(form);
 		return "redirect:/projects";
 	}
+	@RequestMapping(value="/updateTaskColor", method= RequestMethod.POST, headers = {"Content-type=application/json"})
+	public String updateTaskColor(@RequestBody TaskDTO task) {
+		TaskDTO newTask = task;
+		taskRepository.updateTaskColor(task.getTaskColor(), task.getTaskId());
+		return "redirect:/taskBoard?&projectId=" + task.getProjectId();
+	}
+	
 }

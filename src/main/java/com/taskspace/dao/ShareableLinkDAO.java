@@ -1,7 +1,5 @@
 package com.taskspace.dao;
 
-import java.net.URL;
-
 public class ShareableLinkDAO {
 	
 	/**

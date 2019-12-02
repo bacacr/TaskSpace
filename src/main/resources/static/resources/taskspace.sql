@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 27, 2019 at 01:45 AM
+-- Generation Time: Dec 02, 2019 at 03:27 AM
 -- Server version: 5.7.26
 -- PHP Version: 7.2.18
 
@@ -75,12 +75,11 @@ INSERT INTO `task` (`TASK_ID`, `PRIORITY`, `DESCRIPTION`, `ASSIGNED_TO`, `PROJEC
 (4, 3, 'Test Adding Task to Project', 'Bob', 10, '#4A9FF9'),
 (5, 2, 'Another Test for Adding', 'Bob', 10, '#4A9FF9'),
 (6, 3, 'Another Test for Adding', 'Bob', 1, '#4A9FF9'),
-(7, 4, 'Test 4', 'Thomas', 1, '#4A9FF9'),
+(7, 4, 'Test 4', 'Thomas', 1, '#f9944a'),
 (8, 4, 'Test Adding Task to Project', 'Thomas', 1, '#4A9FF9'),
 (9, 1, 'dcscc', 'Bob', 1, '#4A9FF9'),
 (10, 1, 'Another Test', 'Bob', 2, '#4A9FF9'),
-(11, 5, 'Cuddling Bubbles', 'Jasmine', 3, '#4A9FF9'),
-(12, 1, '', '', 1, '#4A9FF9');
+(11, 5, 'Cuddling Bubbles', 'Jasmine', 3, '#4A9FF9');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

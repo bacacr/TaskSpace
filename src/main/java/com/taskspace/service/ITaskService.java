@@ -15,4 +15,6 @@ public interface ITaskService {
 
 	List<TaskDTO> fetchTasks(int projectId);
 
+	List<TaskDTO> fetchDoneTasks(List<TaskDTO> tasks);
+
 }

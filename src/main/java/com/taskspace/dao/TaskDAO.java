@@ -1,7 +1,5 @@
 package com.taskspace.dao;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.taskspace.dto.TaskDTO;
