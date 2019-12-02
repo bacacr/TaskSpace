@@ -52,7 +52,7 @@ public class TaskSpaceController {
 	}
 	
 	@GetMapping("/taskBoard")
-	public String getTaskBoard(@ModelAttribute("newTask") TaskDTO form, @RequestParam("projectId") int projectId, Model model) {
+	public String getTaskBoard(@ModelAttribute("newTask") TaskDTO form,@ModelAttribute("editTask") TaskDTO task, @RequestParam("projectId") int projectId, Model model) {
 		List<TaskDTO> taskList = taskRepository.findAllProjectTasks(projectId);
 		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
 		List<TaskDTO> taskDone = taskService.fetchDoneTasks(taskList);
@@ -81,19 +81,8 @@ public class TaskSpaceController {
 	}
 	@PostMapping("/addTask")
 	public String addTaskSubmit(@ModelAttribute("newTask") TaskDTO form, RedirectAttributes redirectAttributes) {
-		form.setProjectId(form.getProjectId());
-		form.setTaskColor("#4A9FF9");
 		taskRepository.save(form);
 		return "redirect:/taskBoard?&projectId=" + form.getProjectId();
-	}
-	@GetMapping("/addTask")
-	public String addProjectTask(@RequestParam("projectId") int projectId, @ModelAttribute("newTask") TaskDTO form, Model model) {
-		model.addAttribute("projectId", projectId);
-		return "addTask";
-	}
-	@GetMapping("/addProject")
-	public String addNewProject(@ModelAttribute("newProject") ProjectDTO form) {
-		return "addProject";
 	}
 	@PostMapping("/addProject")
 	public String addProject(@ModelAttribute("newProject") ProjectDTO form, RedirectAttributes redirectAttributes) {
@@ -102,9 +91,17 @@ public class TaskSpaceController {
 	}
 	@RequestMapping(value="/updateTaskColor", method= RequestMethod.POST, headers = {"Content-type=application/json"})
 	public String updateTaskColor(@RequestBody TaskDTO task) {
-		TaskDTO newTask = task;
 		taskRepository.updateTaskColor(task.getTaskColor(), task.getTaskId());
 		return "redirect:/taskBoard?&projectId=" + task.getProjectId();
 	}
-	
+	@PostMapping("/editTask")
+	public String editTask(@ModelAttribute("editTask") TaskDTO form, RedirectAttributes redirectAttributes) {
+		taskRepository.editTask(form.getTaskId(), form.getTaskDescription(), form.getTaskAssignedTo());
+		return "redirect:/taskBoard?&projectId=" + form.getProjectId();
+	}
+	@RequestMapping(value="/deleteTask", method= RequestMethod.POST, headers = {"Content-type=application/json"})
+	public String deleteTask(@RequestBody TaskDTO task) {
+		taskRepository.deleteTask(task.getTaskId());
+		return "redirect:/taskBoard?&projectId=" + task.getProjectId();
+	}
 }

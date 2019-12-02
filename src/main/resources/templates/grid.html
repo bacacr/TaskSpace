@@ -8,11 +8,8 @@
 <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
 <script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
 <script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <title>TaskSpace.com</title>
-<style>
-
-
-</style>
 </head>
 <body>
 	<div class="topnav">
@@ -20,8 +17,6 @@
 		<div class="topnav-right">
   		<a class="navBtn" href="/">Home</a>
   		<a class="navBtn" href="/projects">Projects</a>
-  		<a class="navBtn" href="/tasks">Tasks</a>
-  		<a class="active navBtn" href="/grid">Grid</a>
   		</div>
   	</div>
 	<br>
@@ -33,56 +28,69 @@
   			<div class="board-column-header" style="opacity: 1; transform: scale(1);">Open</div>
   			<div class="board-column-content muuri" th:each="task: ${taskOpen}">
     			<div class="board-item muuri-item muuri-item-shown openTaskCard">
+    				<div id="remove" class="card-remove"><i>X</i></div>
+    				<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
+    				<br>
+    				<span class="taskItems">Priority: <span class="taskItems" th:text="${task.taskPriority}"></span></span>
+    				<br>
+    				<span class="taskItems">Assigned: <span class="taskItems" th:text="${task.taskAssignedTo}"></span></span>
+    				<br>
+    				<span class="taskItems">Description: </span>
+    				<br/>
+    				<span class="taskItems" th:text="${task.taskDescription}"></span>
+    				<br/>
+    			</div>
+  			</div>
+  			<button id="addBtn" class="addBtn openBtn" type=button>Add +</button>
+  		</div>
+  		<div class="board-column working muuri-item muuri-item-shown">
+  			<div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
+  			<div class="board-column-content muuri" th:each="task: ${taskWorking}">
+    			<div class="board-item muuri-item muuri-item-shown workingTaskCard">
+    				<div id="remove" class="card-remove"><i>X</i></div>
     				<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
     				<br>
     				<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
-    				<br>
-    				<span class="taskItems" th:text="${task.taskAssignedTo}"></span>
-    				<br>
-    				<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
-    			</div>
-  			</div>
-  			<button id="myBtn"  class="addBtn" type=button>Add +</button>
-  		</div>
-  <div class="board-column working muuri-item muuri-item-shown">
-  <div class="board-column-header" style="opacity: 1; transform: scale(1);">Working</div>
-  <div class="board-column-content muuri" th:each="task: ${taskWorking}">
-    <div class="board-item muuri-item muuri-item-shown workingTaskCard">
-    	<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
-    	<br>
-    	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
-    	<br>
-    	<span class="taskItems" th:text="${task.taskAssignedTo}"></span>
-    	<br>
-    	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
-    </div>
-  </div>
-  <button id="myBtn" class="addBtn" type=button>Add +</button>
-  </div>
-  <div class="board-column done muuri-item muuri-item-shown">
-  <div class="board-column-header" style="opacity: 1; transform: scale(1);">Finished</div>
-  <div class="board-column-content muuri" th:each="task: ${taskDone}">
-    <div class="board-item muuri-item muuri-item-shown doneTaskCard">
-    	<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
-    	<br>
-    	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
-    	<br>
-    	<span class="taskItems" th:text="${task.taskAssignedTo}"></span>
-    	<br>
-    	<span class="taskItems">Color: <span th:text="${task.taskColor}"></span></span>
-    </div>
-  </div>
-  <button id="myBtn" class="addBtn" type=button>Add +</button>
-  </div>
+			    	<br>
+			    	<span class="taskItems">Assigned: <span th:text="${task.taskAssignedTo}"></span></span>
+			    	<br>
+			    	<span class="taskItems">Description: </span>    				
+			    	<br/>
+			    	<span class="taskItems" th:text="${task.taskDescription}"></span>
+			    	<br/>
+			    </div>
+			  </div>
+			  <button id="addBtn" class="addBtn workingBtn" type=button>Add +</button>
+		</div>
+		<div class="board-column done muuri-item muuri-item-shown">
+			<div class="board-column-header" style="opacity: 1; transform: scale(1);">Finished</div>
+			<div class="board-column-content muuri" th:each="task: ${taskDone}">
+			    <div class="board-item muuri-item muuri-item-shown doneTaskCard">
+			    	<div id="remove" class="card-remove"><i>X</i></div>
+			    	<span class="taskItems taskID">ID: <span th:text= "${task.taskId}"></span></span>
+			    	<br>
+			    	<span class="taskItems">Priority: <span th:text="${task.taskPriority}"></span></span>
+			    	<br>
+			    	<span class="taskItems">Assigned: <span th:text="${task.taskAssignedTo}"></span></span>
+			    	<br>
+			    	<span class="taskItems">Description: </span>
+			    	<br/>
+			    	<span th:text="${task.taskDescription}"></span>
+			    	<br/>
+			    </div>
+			  </div>
+			  <button id="addBtn" class="addBtn doneBtn" type=button>Add +</button>
+			  </div>
+	</div>
+	</section>
 </div>
-</section>
-</div>
-	<div id="myModal" class="modal">
+	<div id="addModal" class="modal">
   	<!-- Modal content -->
   	<div class="modal-content">
-    	<span class="close">&times;</span>
+    	<span id="addClose" class="close">&times;</span>
 		<form th:action="@{/addTask}" th:object="${newTask}" method="post">
 			<div align="center">
+				<h2>Add Task</h2>
 				<label>TaskPriority</label>
 				<br>
 				<select id="taskPriority" th:field="*{taskPriority}" name="Priority">
@@ -93,18 +101,60 @@
   					<option value="5">5</option>
 				</select>
 				<br>
+				<br>
 				<label>TaskDescription</label>
 				<br>				
-				<input type="text" id="taskDescription" th:field="*{taskDescription}" placeholder="Description"></input>
+				<textarea id="taskDescription" rows = "5" cols = "30" th:field="*{taskDescription}" placeholder="Description"></textarea>
+				<br>
 				<br>
 				<label>TaskAssignedTo</label>
 				<br>
-				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="taskAssignedTo"></input>
+				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="Name"></input>
 				<br/>
-				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="taskAssignedTo" hidden=true></input>
+				<br>
+				<input type="text" id="taskColor" th:field="*{taskColor}" placeholder="taskColor" hidden=true></input>
 				<br/>
-				<input type="text" id="projectId" th:field="*{projectId}" placeholder="projectId" hidden=true></input>
+        		<br/>
+				<input type="text" id="projectId" th:text="${projectId}" th:field="*{projectId}" placeholder="projectId" style="display: none;"></input>
 				<br/>
+        		<br/>
+        		<input class="submitbutton" type="submit" value="Submit"/>
+        		<br/>
+			</div>
+		</form>
+  	</div>
+  	</div>
+  	<div id="editModal" class="modal">
+  	<!-- Modal content -->
+  	<div class="modal-content">
+    	<span id="editClose" class="close">&times;</span>
+		<form th:action="@{/editTask}" th:object="${editTask}" method="post">
+			<div align="center">
+				<h2>Edit Task</h2>
+				<label>TaskPriority</label>
+				<br>
+				<select id="editTaskPriority" th:field="*{taskPriority}" name="Priority">
+					<option value="1">1</option>
+  					<option value="2">2</option>
+  					<option value="3">3</option>
+  					<option value="4">4</option>
+  					<option value="5">5</option>
+				</select>
+				<br>
+				<label>Task Description</label>
+				<br>				
+				<textarea id="editTaskDescription" rows = "5" cols = "30" th:field="*{taskDescription}" placeholder="Description"></textarea>
+				<br>
+				<label>Assigned To</label>
+				<br>
+				<input type="text" id="editTaskAssignedTo" th:field="*{taskAssignedTo}" placeholder="Name"></input>
+				<br/>
+				<br/>
+				<input type="text" id="editTaskId" th:field="*{taskId}" placeholder="taskId" hidden=true></input>
+				<br/>
+        		<br/>
+        		<input type="text" id="editProjectId" th:field="*{projectId}" placeholder="projectId" style="display: none;"></input>
+        		<br/>
         		<br/>
         		<input class="submitbutton" type="submit" value="Submit"/>
         		<br/>
@@ -188,32 +238,70 @@ document.addEventListener('DOMContentLoaded', function () {
 	    dragReleaseDuration: 400,
 	    dragReleaseEasing: 'ease'
 	  });
-	  
-	  	var modal = document.getElementById("myModal");
-
-  	 	// Get the button that opens the modal
-  	 	var btn = document.getElementById("myBtn");
+  	 	
+  	 	checkForEmpty();
+  	 	
+  	 	var boardElement = document.getElementsByClassName('board-item');
+  	 	for (var i = 0; i < boardElement.length; i++) {
+  	  	 	boardElement[i].addEventListener('dblclick', function(e){
+  	  	 		if(e.target.textContent == 'X'){
+  	  	 			getTaskForDelete(e);
+  	  	 			window.location.reload(true); 
+  	  	 		}
+  	  	 		else{
+  	  				editModal.style.display = "block";
+  	  				editTask(e.currentTarget.textContent);
+  	  	 		}
+  	  	 	});
+  	 	};
+	  	var addModal = document.getElementById("addModal");
 
   	 	// Get the <span> element that closes the modal
-  	 	var span = document.getElementsByClassName("close")[0];
-
-  	 	// When the user clicks the button, open the modal 
-  	 	btn.onclick = function() {
-  	   		modal.style.display = "block";
-  	 	}
+  	 	var addClose = document.getElementById("addClose");
 
   	 	// When the user clicks on <span> (x), close the modal
-  	 	span.onclick = function() {
-  	   		modal.style.display = "none";
+  	 	addClose.onclick = function() {
+  	 		addModal.style.display = "none";
+  	 	}
+  	 	
+	  	var editModal = document.getElementById("editModal");
+
+  	 	// Get the <span> element that closes the modal
+  	 	var editClose = document.getElementById("editClose");
+
+  	 	// When the user clicks on <span> (x), close the modal
+  	 	editClose.onclick = function() {
+  	 		editModal.style.display = "none";
   	 	}
 
   	 	// When the user clicks anywhere outside of the modal, close it
   	 	window.onclick = function(event) {
-  	   		if (event.target == modal) {
-  	     		modal.style.display = "none";
+  	   		if (event.target == addModal) {
+  	   			addModal.style.display = "none";
+  	   		}
+  	   		if (event.target == editModal) {
+  	   			editModal.style.display = "none";
   	   		}
   	 	}
-  	 	checkForEmpty();
+  	 	addButtons = document.getElementsByClassName('addBtn');
+  	 	for (var i = 0; i < addButtons.length; i++) {
+  	 		addButtons[i].addEventListener('click', function(e){
+  	 			var taskColor = document.getElementById('taskColor');
+  	 			var element = e.currentTarget.classList;
+  	 			for(i=0; element.length > i; i++){
+  	 				if(element[i] == 'workingBtn'){
+  	 					taskColor.value ='#f9944a'
+  	 				}
+  	 				if(element[i] == 'openBtn'){
+  	 					taskColor.value = '#4A9FF9'
+  	 				}
+  	 				if(element[i] == 'doneBtn'){
+  	 					taskColor.value = '#2ac06d'
+  	 				}
+  	 			}
+  	  	 		addModal.style.display = "block";
+  	 	    });
+  	 	}
 	});
 	function checkTask(element){
 	  var color = '';
@@ -265,14 +353,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	function checkForEmpty(){
 		var taskElement = document.getElementsByClassName("taskID");
 		for(var i=0; taskElement.length > i; i++){
-			if(taskElement[i].innerText == "ID: 0"){
+			if(taskElement[i].textContent == "ID: 0"){
 				var task = taskElement[i].parentNode;
 				task.style.visibility = "hidden";	
 		}
 		}
 	}
 	function updateTask(element, color){
-		var task = element.innerText;
+		var task = element.textContent;
 		var taskId = getTaskId(task)
 		var tasks =/*[[${taskOpen}]]*/ 'defaultanyvalue';
 		var length = tasks.length;
@@ -284,16 +372,59 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		}
 	}
+	
+	function getTaskForDelete(element){
+		var task = element.currentTarget.textContent;
+		var taskContent = getTaskContent(task)
+		task = JSON.stringify(taskContent);
+		deleteTask(task);
+		return task.taskId;
+	}
+	
+	function deleteTask(task){
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", 'http://localhost:8080/deleteTask', true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.send(task);
+	}
+	
+	function editTask(taskItem){
+		var task = taskItem; 
+		task = getTaskContent(task);
+		document.getElementById('editTaskPriority').value = task.taskPriority;
+		document.getElementById('editTaskDescription').value = task.taskDescription;
+		document.getElementById('editTaskAssignedTo').value = task.taskAssignedTo;
+		document.getElementById('editTaskId').value = task.taskId;
+		return task;
+	}
+	
 	function getTaskId(task){
-		var id = task.split('\n', 1)[0];
-		id = id.split(/\s(.+)/)[1]; 
+		var id = task.split('\n', 2)[1];
+		id = id.split(' ').pop().trim();
 		return id;
 	}
+	
+	function getTaskContent(task){
+		var task = task.split('\n');
+		task = {
+			taskId: task[2].split(' ').pop().trim(),
+			taskPriority: task[4].split(' ').pop().trim(),
+			taskAssignedTo: task[6].split(' ').pop().trim(),
+			taskDescription: task[10].trim(),
+			projectId: /*[[${projectId}]]*/ 'defaultanyvalue'
+		}
+		return task;
+	}
+	
 	function taskUpdateColor(task){
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", 'http://localhost:8080/updateTaskColor', true);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		xhr.send(task);
+	}
+	
+	function getTaskList(color){
+		//if(color = "")
 	}
 	function updateTaskColor(task, color){
 		if(color != ''){

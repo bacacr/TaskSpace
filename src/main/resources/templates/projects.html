@@ -16,8 +16,6 @@
 		<div class="topnav-right">
   		<a class="navBtn" href="/">Home</a>
   		<a class="active navBtn" href="/projects">Projects</a>
-  		<a class="navBtn" href="/tasks">Tasks</a>
-  		<a class="navBtn" href="/grid">Grid</a>
   		</div>
   	</div>
 	<br>
@@ -42,6 +40,7 @@
     	<span class="close">&times;</span>
 		<form th:action="@{/addProject}" th:object="${newProject}" method="post">
 			<div align="center">
+				<h2>New Project</h2>
 				<label>Project Name</label>
 				<br>				
 				<input type="text" id="projectName" th:field="*{projectName}" placeholder="Name"></input>

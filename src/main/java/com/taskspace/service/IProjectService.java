@@ -10,4 +10,5 @@ public interface IProjectService {
 	List<ProjectDTO> fetchAllProjects(int linkId);
 
 	List<ProjectDTO> fetchAllProjects();
+	
 }
