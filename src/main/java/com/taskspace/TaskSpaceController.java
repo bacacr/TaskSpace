@@ -1,6 +1,7 @@
 package com.taskspace;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,10 +56,16 @@ public class TaskSpaceController {
 		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
 		List<TaskDTO> taskDone = taskService.fetchDoneTasks(taskList);
 		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
+		Optional<ProjectDTO> project = projectRepository.findById(projectId);
+		ProjectDTO projectDTO = new ProjectDTO();
+		if(project.isPresent()) {
+			projectDTO = project.get();
+		}
 		model.addAttribute("taskWorking", taskWorking);
 		model.addAttribute("taskOpen", taskOpen);
 		model.addAttribute("taskDone", taskDone);
 		model.addAttribute("projectId", projectId);
+		model.addAttribute("project", projectDTO);
 		return "grid";
 	}
 

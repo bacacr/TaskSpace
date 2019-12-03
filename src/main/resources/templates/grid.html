@@ -21,6 +21,10 @@
   	</div>
 	<br>
 <div class="content-area">
+	<div style="border-bottom: 5px solid #5A6571;">
+	<h2 style="color:#5A6571;" th:text="${project.projectName}"></h2>
+	<h4 style="color:#98a5b6;" th:text="${project.projectDesc}"></h4>
+	</div>
 	<p id="project-id" th:text="${projectId}" hidden=true></p>
 	<section class="task-board">
 	<div class="board muuri">
@@ -102,12 +106,12 @@
 				</select>
 				<br>
 				<br>
-				<label>TaskDescription</label>
+				<label>Task Description</label>
 				<br>				
 				<textarea id="taskDescription" rows = "5" cols = "30" th:field="*{taskDescription}" placeholder="Description"></textarea>
 				<br>
 				<br>
-				<label>TaskAssignedTo</label>
+				<label>Assigned To</label>
 				<br>
 				<input type="text" id="taskAssignedTo" th:field="*{taskAssignedTo}" placeholder="Name"></input>
 				<br/>
