@@ -6,12 +6,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.taskspace.dao.TaskDAO;
 import com.taskspace.dao.TaskRepository;
 import com.taskspace.dto.TaskDTO;
 @Component
 public class TaskServiceStub implements ITaskService{
 	@Autowired
 	TaskRepository taskRepository;
+	@Autowired
+	TaskDAO taskDAO;
+	
 	@Override
 	public TaskDTO fetchByTaskId(int taskId) {
 		TaskDTO taskDTO = new TaskDTO();
@@ -70,45 +74,15 @@ public class TaskServiceStub implements ITaskService{
 	}
 	@Override
 	public List<TaskDTO> fetchInProgressTasks(List<TaskDTO> tasks) {
-		List<TaskDTO> taskWorking = new ArrayList<TaskDTO>();
-		for (TaskDTO task: tasks) {
-			if(task.getTaskColor().equals("#f9944a")) {
-				taskWorking.add(task);
-			}
-		}
-		if(taskWorking.isEmpty()) {
-			TaskDTO task = new TaskDTO();
-			taskWorking.add(task);
-		}
-		return taskWorking;
+		return taskDAO.fetchInProgressTasks(tasks);
 	}
 	@Override
 	public List<TaskDTO> fetchDoneTasks(List<TaskDTO> tasks) {
-		List<TaskDTO> taskDone = new ArrayList<TaskDTO>();
-		for (TaskDTO task: tasks) {
-			if(task.getTaskColor().equals("#2ac06d")) {
-				taskDone.add(task);
-			}
-		}
-		if(taskDone.isEmpty()) {
-			TaskDTO task = new TaskDTO();
-			taskDone.add(task);
-		}
-		return taskDone;
+		return taskDAO.fetchDoneTasks(tasks);
 	}
 	@Override
 	public List<TaskDTO> fetchOpenTasks(List<TaskDTO> tasks) {
-		List<TaskDTO> taskOpen = new ArrayList<TaskDTO>();;
-		for (TaskDTO task: tasks) {
-			if(task.getTaskColor().equals("#4A9FF9")) {
-				taskOpen.add(task);
-			}
-		}
-		if(taskOpen.isEmpty()) {
-			TaskDTO task = new TaskDTO();
-			taskOpen.add(task);
-		}
-		return taskOpen;
+		return taskDAO.fetchOpenTasks(tasks);
 	}
 	
 	@Override
