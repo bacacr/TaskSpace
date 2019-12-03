@@ -66,7 +66,7 @@ public class TaskSpaceController {
 		model.addAttribute("taskDone", taskDone);
 		model.addAttribute("projectId", projectId);
 		model.addAttribute("project", projectDTO);
-		return "grid";
+		return "taskBoard";
 	}
 
 	@GetMapping("/projects")
@@ -74,15 +74,6 @@ public class TaskSpaceController {
 		Iterable<ProjectDTO> projectList = projectService.fetchAllProjects();
 		model.addAttribute("projectList", projectList);
 		return "projects";
-	}
-	@GetMapping("/grid")
-	public String createGrid(Model model) {
-		List<TaskDTO> taskList = taskService.fetchTasksForGrid(20);
-		List<TaskDTO> taskWorking = taskService.fetchInProgressTasks(taskList);
-		List<TaskDTO> taskOpen = taskService.fetchOpenTasks(taskList);
-		model.addAttribute("taskWorking", taskWorking);
-		model.addAttribute("taskOpen", taskOpen);
-		return "grid";
 	}
 	@PostMapping("/addTask")
 	public String addTaskSubmit(@ModelAttribute("newTask") TaskDTO form, RedirectAttributes redirectAttributes) {
