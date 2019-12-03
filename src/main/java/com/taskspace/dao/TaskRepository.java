@@ -22,12 +22,16 @@ public interface TaskRepository extends CrudRepository<TaskDTO, Integer> {
 	
 	@Transactional
 	@Modifying
-	@Query("UPDATE TaskDTO t SET t.taskDescription = :taskDescription, t.taskAssignedTo = :taskAssignedTo WHERE t.taskId = :taskId")
-	void editTask(@Param("taskId") int taskId, @Param("taskDescription") String taskDescription, @Param("taskAssignedTo") String taskAssignedTo);
+	@Query("UPDATE TaskDTO t SET t.taskDescription = :taskDescription, t.taskAssignedTo = :taskAssignedTo, t.taskPriority = :taskPriority WHERE t.taskId = :taskId")
+	void editTask(@Param("taskId") int taskId, @Param("taskDescription") String taskDescription, @Param("taskAssignedTo") String taskAssignedTo,@Param("taskPriority") int taskPriority);
 	
 	@Transactional
 	@Modifying
 	@Query("DELETE FROM TaskDTO t WHERE t.taskId = :taskId")
 	void deleteTask(@Param("taskId") int taskId);
-
+	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM TaskDTO t WHERE t.projectId = :projectId")
+	void deleteTasks(@Param("projectId") int projectId);
 }

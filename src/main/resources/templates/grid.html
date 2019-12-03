@@ -115,7 +115,7 @@
 				<input type="text" id="taskColor" th:field="*{taskColor}" placeholder="taskColor" hidden=true></input>
 				<br/>
         		<br/>
-				<input type="text" id="projectId" th:text="${projectId}" th:field="*{projectId}" placeholder="projectId" style="display: none;"></input>
+				<input type="text" id="projectId" th:field="*{projectId}" placeholder="projectId" style="display: none;"></input>
 				<br/>
         		<br/>
         		<input class="submitbutton" type="submit" value="Submit"/>
@@ -399,8 +399,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 	
 	function getTaskId(task){
-		var id = task.split('\n', 2)[1];
-		id = id.split(' ').pop().trim();
+		var task = task.split('\n');
+		id = task[2].split(' ').pop().trim();
 		return id;
 	}
 	

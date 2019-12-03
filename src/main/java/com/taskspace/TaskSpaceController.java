@@ -2,8 +2,6 @@ package com.taskspace;
 
 import java.util.List;
 
-import javax.persistence.Column;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -65,7 +63,7 @@ public class TaskSpaceController {
 	}
 
 	@GetMapping("/projects")
-	public String createProjects(@ModelAttribute("newProject") ProjectDTO form, Model model) {
+	public String createProjects(@ModelAttribute("newProject") ProjectDTO form, @ModelAttribute("editProject") ProjectDTO project, Model model) {
 		Iterable<ProjectDTO> projectList = projectService.fetchAllProjects();
 		model.addAttribute("projectList", projectList);
 		return "projects";
@@ -96,12 +94,23 @@ public class TaskSpaceController {
 	}
 	@PostMapping("/editTask")
 	public String editTask(@ModelAttribute("editTask") TaskDTO form, RedirectAttributes redirectAttributes) {
-		taskRepository.editTask(form.getTaskId(), form.getTaskDescription(), form.getTaskAssignedTo());
+		taskRepository.editTask(form.getTaskId(), form.getTaskDescription(), form.getTaskAssignedTo(), form.getTaskPriority());
 		return "redirect:/taskBoard?&projectId=" + form.getProjectId();
 	}
 	@RequestMapping(value="/deleteTask", method= RequestMethod.POST, headers = {"Content-type=application/json"})
 	public String deleteTask(@RequestBody TaskDTO task) {
 		taskRepository.deleteTask(task.getTaskId());
 		return "redirect:/taskBoard?&projectId=" + task.getProjectId();
+	}
+	@PostMapping("/editProject")
+	public String editProject(@ModelAttribute("editProject") ProjectDTO form, RedirectAttributes redirectAttributes) {
+		projectRepository.editProject(form.getProjectId(), form.getProjectDesc(), form.getProjectMembers(), form.getProjectName());
+		return "redirect:/projects";
+	}
+	@RequestMapping(value="/deleteProject", method= RequestMethod.POST, headers = {"Content-type=application/json"})
+	public String deleteProject(@RequestBody ProjectDTO project) {
+		projectRepository.deleteProject(project.getProjectId());
+		taskRepository.deleteTasks(project.getProjectId());
+		return "redirect:/projects";
 	}
 }

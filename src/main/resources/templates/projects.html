@@ -20,14 +20,19 @@
   	</div>
 	<br>
 	<div class="row">
-		<form th:each="project: ${projectList}" class="box" th:onclick="'location.href=\'/taskBoard?&projectId=' + ${project.projectId} + '\''">
+		<div id="projectForm" th:each="project: ${projectList}" class="box">
     		<div class="column">
 	  			<div class="card">
+	  				<div th:id="${project.projectId}" th:onclick="'location.href=\'/taskBoard?&projectId=' + ${project.projectId} + '\''">
     				<h4 class="label" th:text="${project.projectDesc}"><b></b></h4>
     				<p th:text="${project.projectMembers}"></p>
+    				</div>
+    				<div class="editBtn" style="position: relative">
+    					<button style="width: 40px; height: 20px; float: left; padding-bottom: 10px;">Edit</button>
+    				</div>
     			</div>
 			</div>
-    	</form>
+    	</div>
     	<div class="column">
 	  		<div id="myBtn" class="newCard">
     			<h4 class="label"><b>+</b></h4>
@@ -47,7 +52,7 @@
 				<br>
 				<label>Project Description</label>
 				<br>
-				<input type="text" id="projectDesc" th:field="*{projectDesc}" placeholder="Description"></input>
+				<textarea rows = "5" cols = "30" id="projectDesc" th:field="*{projectDesc}" placeholder="Description"></textarea>
 				<br/>
 				<label>Project Members</label>
 				<br>
@@ -60,16 +65,39 @@
 		</form>
   	</div>
   	</div>
-	<!--  
-	<div class="wrapper">
-  		<form th:each="project: ${projectList}" class="box" th:onclick="'location.href=\'/taskBoard?&projectId=' + ${project.projectId} + '\''">
-  			<a th:text="${project.projectDesc}"></a>
-  			<a th:text="${project.projectMembers}"></a>
-  			<a th:text="${project.projectId}"></a>
-  		</form>
+  	<div id="editModal" class="modal">
+  	<!-- Modal content -->
+  	<div class="modal-content">
+    	<span id="editClose" class="close">&times;</span>
+		<form th:action="@{/editProject}" th:object="${editProject}" method="post">
+			<div align="center">
+				<h2>Edit Project</h2>
+				<label>Project Name</label>
+				<br>				
+				<input type="text" id="editProjectName" th:field="*{projectName}" placeholder="Name"></input>
+				<br>
+				<label>Project Description</label>
+				<br>
+				<textarea rows = "5" cols = "30" id="editProjectDesc" th:field="*{projectDesc}" placeholder="Description"></textarea>
+				<br/>
+				<label>Project Members</label>
+				<br>
+				<input type="text" id="editProjectMembers" th:field="*{projectMembers}" placeholder="Members"></input>
+				<br/>
+        		<br/>
+        		<input type="text" id="editProjectId" th:field="*{projectId}" placeholder="projectId" style="display: none;"></input>
+        		<br/>
+        		<br/>
+        		<div>
+        		<button onclick="event.preventDefault(); deleteProject();">Delete</button>
+        		<input class="submitbutton" type="submit" value="Submit"/>
+        		</div>
+        		<br/>
+			</div>
+		</form>
   	</div>
-  	-->
-  	  	<script>
+  	</div>
+  	  	<script th:inline="javascript">
   	  	var modal = document.getElementById("myModal");
 
   	 	// Get the button that opens the modal
@@ -93,6 +121,70 @@
   	   		if (event.target == modal) {
   	     		modal.style.display = "none";
   	   		}
+  	 	}
+  	  	var editModal = document.getElementById("editModal");
+
+  	 	// Get the button that opens the modal
+  	 	var editBtn = document.getElementsByClassName("editBtn");
+
+  	 	// Get the <span> element that closes the modal
+  	 	var editSpan = document.getElementById("editClose");
+  	 	
+  	 	// When the user clicks the button, open the modal 
+  	 	for(var i = 0; editBtn.length > i; i++){
+  	  	 	editBtn[i].onclick = function(e) {
+  	  	 		getProject(e);
+  	  	 		editModal.style.display = "block";
+  	  	 	}
+  	 	}
+
+  	 	// When the user clicks on <span> (x), close the modal
+  	 	editSpan.onclick = function() {
+  	 		editModal.style.display = "none";
+  	 	}
+
+  	 	// When the user clicks anywhere outside of the modal, close it
+  	 	window.onclick = function(event) {
+  	   		if (event.target == editModal) {
+  	   			editModal.style.display = "none";
+  	   		}
+  	 	}
+  	 	
+  	 	function openProject(projectId){
+  	 		location.href = '/taskBoard?&projectId=' + projectId
+  	 	}
+  	 	function getProject(projectId){
+  	 		projectId = getProjectId(projectId);
+  	 		var projectList = /*[[${projectList}]]*/ 'defaultanyvalue'
+  	 		for(i=0; projectList.length > i; i++){
+  	 			if(projectList[i].projectId == projectId){
+  	 				document.getElementById('editProjectName').value = projectList[i].projectName;
+  	 				document.getElementById('editProjectDesc').value = projectList[i].projectDesc;
+  	 				document.getElementById('editProjectMembers').value = projectList[i].projectMembers;
+  	 				document.getElementById('editProjectName').value = projectList[i].projectName;
+  	 				document.getElementById('editProjectId').value = projectList[i].projectId;
+  	 			}
+  	 		}
+  	 	}
+  	 	function getProjectId(project){
+  	 		var projectIdString =  project.path[2].innerHTML;
+  	 		var projectId = projectIdString.split('id="');
+  	 		projectId = projectId[1].split('"');
+  	 		projectId = projectId[0];
+  	 		return projectId;
+  	 	}
+  	 	function deleteProject(){
+  	 		projectContent = {
+  	 				projectId: document.getElementById('editProjectId').value
+  	 		}
+  			project = JSON.stringify(projectContent);
+  			var xhr = new XMLHttpRequest();
+  			xhr.open("POST", 'http://localhost:8080/deleteProject', true);
+  			xhr.setRequestHeader('Content-Type', 'application/json');
+  			xhr.send(project);
+  			setInterval(function() {
+  				location.reload();
+  			}, 1000);
   	 	}
   	</script>
 </body>

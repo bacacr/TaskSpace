@@ -6,8 +6,9 @@
 .column {
   float: left;
   width: 25%;
-  height: 150px;
+  height: 175px;
   padding: 0 10px;
+  margin-bottom: 30px;
 }
 
 /* Remove extra left and right margins, due to padding */
@@ -38,6 +39,7 @@
   color: white;
   height: 100%;  
   width: 100%;
+  margin-top: 20px;
 }
 .newCard {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -48,7 +50,7 @@
   color: #8190a5;
   height: 100%;  
   width: 100%;
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 50px;
 }
 
@@ -58,7 +60,7 @@
     margin-inline-start: 0px !important;
     margin-inline-end: 0px !important;
     padding: 45px 0px;
-	height: 150px;
+	height: 175px;
 }
 .newCard:hover {
 	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
