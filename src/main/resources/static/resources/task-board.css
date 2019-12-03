@@ -56,6 +56,7 @@
   position: absolute;
   width: 100%;
   margin: 5px 0;
+  padding-bottom: 10px;
 }
 .board-item.muuri-item-releasing {
   z-index: 9998;
@@ -91,8 +92,45 @@
 .openTaskCard{
   background: #4A9FF9;
   color:white;
+  text-align: center;
 }
 .workingTaskCard{
   background: #f9944a;
   color:white;
+  text-align: center;
+
+}
+.doneTaskCard{
+	background: #2ac06d;
+	color: white;
+	text-align: center;
+}
+.taskCard{
+	padding-bottom: 25px !important;
+}
+.addBtn{
+	width: 100%;
+	margin: 0 auto;
+}
+.editBtn{
+	width: 100%;
+	margin: 0 auto;
+}
+.taskID{
+	display: none;
+}
+.card-remove {
+  position: absolute;	
+  display: none;
+  width: 20px;
+  height: 20px;
+  line-height: 30px;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 400;
+  cursor: pointer;
+  padding-left: 5px;
+}
+.board-item:hover > .card-remove {
+  display: block;
 }
